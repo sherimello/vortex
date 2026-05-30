@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="vortex_agent/assets/images/logo.png" width="100" alt="Vortex Agent logo" />
+  <img src="assets/images/logo.png" width="100" alt="Vortex Agent logo" />
 </p>
 
 <h1 align="center">Vortex Agent</h1>
