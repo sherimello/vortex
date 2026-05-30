@@ -1,7 +1,7 @@
 import 'package:logger/logger.dart';
 import '../models/response_model.dart';
 import 'ai_service_base.dart';
-import 'grok_service.dart';
+import 'groq_service.dart';
 import 'cohere_service.dart';
 
 /// Routes every request to the best available provider.
@@ -12,7 +12,7 @@ import 'cohere_service.dart';
 ///   • Per-provider cooldown after rate-limit/auth errors
 ///   • Request complexity (auto-selects model tier within each provider)
 class SmartRouterService extends AiServiceBase {
-  final GrokService groq;
+  final GroqService groq;
   final CohereService cohere;
   final Logger _logger = Logger();
 

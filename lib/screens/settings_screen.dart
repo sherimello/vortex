@@ -544,7 +544,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     if (_groqKeyController.text.isNotEmpty) {
       _services.storageService.setApiKey(_groqKeyController.text);
-      _services.grokService.setApiKey(_groqKeyController.text);
+      _services.groqService.setApiKey(_groqKeyController.text);
       _services.smartRouter.resetGroqState();
       savedAny = true;
     }
@@ -577,9 +577,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() => _testingConnection = true);
 
     if (groqKey.isNotEmpty) {
-      _services.grokService.setApiKey(groqKey);
+      _services.groqService.setApiKey(groqKey);
       _snack('Testing Groq…');
-      final r = await _services.grokService.executeCommand(
+      final r = await _services.groqService.executeCommand(
         'Say OK in one word',
       );
       if (!mounted) return;

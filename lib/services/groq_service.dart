@@ -4,7 +4,7 @@ import '../models/response_model.dart';
 import 'agent_prompts.dart';
 import 'ai_service_base.dart';
 
-class GrokService extends AiServiceBase {
+class GroqService extends AiServiceBase {
   static const String _baseUrl = 'https://api.groq.com/openai/v1';
   late Dio _dio;
   final Logger _logger = Logger();
@@ -20,7 +20,7 @@ class GrokService extends AiServiceBase {
     'mistral-saba-24b',
   ];
 
-  GrokService() {
+  GroqService() {
     _dio = Dio();
   }
 

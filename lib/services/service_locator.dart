@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'grok_service.dart';
+import 'groq_service.dart';
 import 'cohere_service.dart';
 import 'smart_router_service.dart';
 import 'ai_service_base.dart';
@@ -10,7 +10,7 @@ import 'app_discovery_service.dart';
 
 class ServiceLocator {
   static final ServiceLocator _instance = ServiceLocator._internal();
-  late GrokService _grokService;
+  late GroqService _groqService;
   late CohereService _cohereService;
   late SmartRouterService _smartRouter;
   late FileOperationService _fileService;
@@ -25,10 +25,10 @@ class ServiceLocator {
     _storageService = StorageService();
     await _storageService.initialize();
 
-    _grokService = GrokService();
+    _groqService = GroqService();
     final groqKey = _storageService.getApiKey();
     if (groqKey != null && groqKey.isNotEmpty) {
-      _grokService.setApiKey(groqKey);
+      _groqService.setApiKey(groqKey);
     }
 
     _cohereService = CohereService();
@@ -38,7 +38,7 @@ class ServiceLocator {
     }
 
     _smartRouter = SmartRouterService(
-      groq: _grokService,
+      groq: _groqService,
       cohere: _cohereService,
     );
 
@@ -77,7 +77,7 @@ class ServiceLocator {
 
   AiServiceBase get activeAiService => _smartRouter;
 
-  GrokService get grokService => _grokService;
+  GroqService get groqService => _groqService;
   CohereService get cohereService => _cohereService;
   SmartRouterService get smartRouter => _smartRouter;
   FileOperationService get fileService => _fileService;

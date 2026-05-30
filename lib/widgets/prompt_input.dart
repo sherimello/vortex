@@ -61,7 +61,6 @@ class _CommandInputState extends State<CommandInput> {
     const textColor = Colors.white;
     const hintColor = Color(0x61FFFFFF);
     const iconColor = Color(0x8CFFFFFF);
-    const borderColor = Color(0xFF2A2A2A);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
@@ -79,9 +78,7 @@ class _CommandInputState extends State<CommandInput> {
               'assets/images/logo.png',
               width: 20,
               height: 20,
-              // color: Colors.blue.withValues(alpha: 0.85),
             ),
-            // const Icon(Icons.bolt, color: Colors.blue, size: 20),
             const SizedBox(width: 10),
             Expanded(
               child: TextField(

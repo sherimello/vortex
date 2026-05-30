@@ -5,7 +5,7 @@ import 'package:window_manager/window_manager.dart';
 import 'services/service_locator.dart';
 import 'services/agent_service.dart';
 import 'screens/settings_screen.dart';
-import 'widgets/glassmorphic_input.dart' show CommandInput;
+import 'widgets/prompt_input.dart' show CommandInput;
 import 'widgets/screen_glow.dart';
 import 'widgets/agent_result_view.dart';
 
