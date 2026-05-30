@@ -1,317 +1,288 @@
-# Vortex Agent Setup Guide
-
-This guide will walk you through setting up the Vortex Agent application on your Windows system.
-
-## Prerequisites Check
-
-Before starting, ensure you have:
-
-- ✅ Windows 10/11 installed
-- ✅ Internet connection
-- ✅ A Grok API key (from https://console.x.ai/api/keys)
-
-## Step 1: Install Flutter (If Not Already Installed)
-
-### Option A: Using Chocolatey (Recommended)
-
-```powershell
-# Open PowerShell as Administrator and run:
-choco install flutter
-```
-
-### Option B: Manual Installation
-
-1. Download Flutter from https://flutter.dev/docs/get-started/install/windows
-2. Extract to `C:\src\flutter`
-3. Add `C:\src\flutter\bin` to your system PATH
-4. Run `flutter doctor` to verify installation
-
-### Verify Installation
-
-```bash
-flutter --version
-dart --version
-```
-
-## Step 2: Get Your Grok API Key
-
-1. Visit https://console.x.ai/api/keys
-2. Sign in or create an account at https://console.x.ai
-3. Create a new API key
-4. Copy the key (you'll need this later)
-5. Keep it safe and don't share it!
-
-## Step 3: Build the Application
-
-### Open Command Prompt or PowerShell
-
-```bash
-# Navigate to the project directory
-cd c:\dev\vortex\vortex_agent
-
-# Get dependencies
-flutter pub get
-
-# Build for Windows (Release mode)
-flutter build windows --release
-```
-
-This will take 2-5 minutes depending on your system.
-
-### After Build Completes
-
-The built application is at:
-```
-c:\dev\vortex\vortex_agent\build\windows\x64\runner\Release\vortex_agent.exe
-```
-
-## Step 4: Create Application Shortcut (Optional)
-
-### Option A: Create in Program Files
-
-```powershell
-# Create folder
-mkdir "C:\Program Files\VortexAgent"
-
-# Copy executable
-copy "C:\dev\vortex\vortex_agent\build\windows\x64\runner\Release\vortex_agent.exe" "C:\Program Files\VortexAgent\"
-
-# Create shortcut on Desktop
-$WshShell = New-Object -ComObject WScript.Shell
-$Shortcut = $WshShell.CreateShortcut("$env:USERPROFILE\Desktop\Vortex Agent.lnk")
-$Shortcut.TargetPath = "C:\Program Files\VortexAgent\vortex_agent.exe"
-$Shortcut.Save()
-```
-
-### Option B: Create Shortcut Manually
-
-1. Right-click on `vortex_agent.exe`
-2. Select "Create shortcut"
-3. Place the shortcut on Desktop or in Start Menu
-
-## Step 5: First Run
-
-1. Double-click `vortex_agent.exe` or the shortcut
-2. The application window will open
-3. You'll see the welcome screen with instructions
-
-## Step 6: Configure API Key
-
-1. Click the **Settings** button (⚙️ icon) in the top-right
-2. Paste your Grok API key in the "Grok API Key" field
-3. Click **Test API Connection** to verify it works
-4. You should see a success message
-5. Click **Save Settings**
-
-## Step 7: Enable Auto-Start (Optional)
-
-To have Vortex Agent launch automatically when you start Windows:
-
-### Option A: Using Settings
-
-1. Open Settings (⚙️ button)
-2. Toggle **Auto Start** to ON
-3. Click **Save Settings**
-
-### Option B: Using Batch Script
-
-1. Open Command Prompt as Administrator
-2. Run the auto-start script:
-   ```bash
-   cd c:\dev\vortex\vortex_agent\windows
-   enable_autostart.bat
-   ```
-
-## Step 8: Test the Application
-
-1. Press `Ctrl+Q` on your keyboard
-2. A glassmorphic dialog should appear
-3. Type a simple command like: `"Open Notepad"`
-4. Press Enter or click Execute
-5. You should see the results in the output window
-
-## Congratulations! 🎉
-
-Your Vortex Agent is now fully set up and ready to use!
-
-## Quick Start Examples
-
-Try these commands to get familiar with the app:
-
-### File Operations
-```
-Create a file at C:\Users\Documents\test.txt with content "Hello Vortex"
-Read C:\Users\Documents\test.txt
-Delete C:\Users\Documents\test.txt
-```
-
-### Application Launching
-```
-Open Notepad
-Launch Visual Studio Code
-Start Google Chrome
-```
-
-### System Information
-```
-Show me the current Windows version
-List all files in the Downloads folder
-Show disk space usage
-```
-
-## Daily Usage
-
-### To Use Vortex Agent
-
-1. Press **Ctrl+Q** anywhere on your desktop
-2. Type your command or question
-3. Press **Enter** to execute
-4. View results in the output window
-5. Press **Escape** or click Close to dismiss
-
-### To Access Settings
-
-1. Click the **Settings** icon (⚙️) in the application window
-2. Or open the Settings screen anytime
-
-### To Minimize to Background
-
-1. Click the **Minimize** button in the top-right (or any minimize action)
-2. The app will run in the background
-3. Press **Ctrl+Q** anytime to bring it back
-
-## Troubleshooting
-
-### "Ctrl+Q is not working"
-
-- Make sure the application is running
-- Try pressing Ctrl+Q slowly (full key press)
-- Restart the application
-- Check if another app is using Ctrl+Q
-- Try restarting your computer
-
-### "API Key Error"
-
-- Verify your API key is correct
-- Check your internet connection
-- Visit https://console.x.ai/api/keys to ensure your key is active
-- Ensure you have API credits
-- Click "Test API Connection" to diagnose
-
-### "Commands are not executing"
-
-- Check the error message in the results window
-- Verify the command is valid for Windows
-- Some operations need administrator rights
-- Try a simpler command first
-
-### "App crashes on startup"
-
-- Run: `flutter clean && flutter pub get`
-- Rebuild: `flutter build windows --release`
-- Check Windows Event Viewer for detailed errors
-
-## Uninstalling
-
-### If installed in Program Files
-
-1. Delete the folder `C:\Program Files\VortexAgent`
-2. Delete desktop shortcuts
-3. Run `enable_autostart.bat` again to remove registry entries, or manually:
-   ```powershell
-   reg delete "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "VortexAgent" /f
-   ```
-
-### If using direct .exe
-
-Simply delete the executable file and any shortcuts.
-
-## Advanced Usage
-
-### Custom Commands
-
-Vortex Agent can execute any Windows command that works in CMD:
-
-```
-# PowerShell commands
-Get all running processes and show me the top 10 by memory
-Search for all .txt files larger than 1MB in my Documents
-
-# System administration
-Get system information including RAM and disk space
-Enable Windows Defender antivirus
-Show network adapter information
-
-# File management
-Create a backup zip of my Documents folder
-Organize my Downloads folder by file type
-Find duplicate files in a specific folder
-```
-
-### Performance Optimization
-
-- Keep the app minimized when not in use
-- Close result windows after reviewing
-- Clear temporary files periodically
-- Restart the app if it becomes slow
-
-## Keyboard Shortcuts
-
-| Keys | Action |
-|------|--------|
-| `Ctrl+Q` | Open/Close command dialog |
-| `Enter` | Submit command |
-| `Escape` | Close dialog |
-| `Tab` | Navigate UI elements |
-
-## Security Tips
-
-⚠️ **Important Security Notes:**
-
-1. **Never share your API key** with anyone
-2. **Be cautious with suggested commands** - review before executing
-3. **Keep your Windows system updated** for security
-4. **Use strong passwords** for sensitive accounts
-5. **Don't store sensitive info** in files you create via Vortex
-
-## Getting Help
-
-If you encounter issues:
-
-1. Check this guide's Troubleshooting section
-2. Review the README.md file for more info
-3. Check application logs (if available)
-4. Visit https://console.x.ai for API-related help
-5. Check Grok API documentation at https://api.x.ai
-
-## Updates
-
-To keep Vortex Agent up to date:
-
-```bash
-# Navigate to project folder
-cd c:\dev\vortex\vortex_agent
-
-# Get latest dependencies
-flutter pub upgrade
-
-# Rebuild
-flutter build windows --release
-
-# Replace old executable
-copy build\windows\x64\runner\Release\vortex_agent.exe "C:\Program Files\VortexAgent\"
-```
-
-## What's Next?
-
-1. ✅ Start using Ctrl+Q to access your AI assistant
-2. 📚 Explore different types of commands
-3. ⚙️ Customize settings to your preference
-4. 📌 Pin shortcuts to your taskbar
-5. 🚀 Integrate with your workflow
+<p align="center">
+  <img src="vortex_agent/assets/images/logo.png" width="100" alt="Vortex Agent logo" />
+</p>
+
+<h1 align="center">Vortex Agent</h1>
+
+<p align="center">
+  An AI-powered floating command palette for Windows.<br/>
+  Describe any task in plain English — Vortex figures out the steps and executes them.
+</p>
+
+<p align="center">
+  <img alt="Platform" src="https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-blue?style=flat-square" />
+  <img alt="Flutter" src="https://img.shields.io/badge/built%20with-Flutter-02569B?style=flat-square&logo=flutter&logoColor=white" />
+  <img alt="AI" src="https://img.shields.io/badge/AI-Groq%20AI%20%7C%20Cohere-blueviolet?style=flat-square" />
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-green?style=flat-square" />
+</p>
 
 ---
 
-**Welcome to Vortex Agent!** Your AI-powered Windows assistant is ready to help. 🚀
+## Table of Contents
 
-For more information, see README.md or visit the project documentation.
+- [What is Vortex?](#what-is-vortex)
+- [Features](#features)
+- [Demo](#demo)
+- [Getting Started](#getting-started)
+- [AI Providers](#ai-providers)
+- [Configuration](#configuration)
+- [How It Works](#how-it-works)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## What is Vortex?
+
+Vortex Agent is a lightweight Windows desktop app that floats above all your windows as a frameless pill-shaped input bar. Press **Ctrl+Q** from anywhere, type what you want, and Vortex either answers your question inline or breaks the task into PowerShell steps and runs them automatically.
+
+It can open apps, create and run full programs in any language, control other apps' UI, manage files, search the web, take screenshots, and much more — all from plain English.
+
+---
+
+## Features
+
+| | Feature | Description |
+|---|---|---|
+| ⚡ | **Global hotkey** | `Ctrl+Q` summons and dismisses the palette from anywhere |
+| 🎯 | **Natural language tasks** | Describe what you want — Vortex figures out the steps |
+| 💬 | **Smart Q&A mode** | Questions get direct answers with markdown, inline code, and code blocks |
+| 🤖 | **Multi-step automation** | Breaks tasks into PowerShell steps, executes them with live output |
+| 🔍 | **App discovery** | Finds Win32, UWP, and Microsoft Store apps automatically |
+| 🖱️ | **UI Automation** | Clicks buttons, fills forms, controls other apps via Windows Accessibility API |
+| 🛠️ | **Code generation** | Creates and runs full programs in Python, Node, HTML, C#, Flutter, and more |
+| 🔀 | **Dual AI providers** | [Groq AI](https://groq.com) primary + [Cohere](https://cohere.com) automatic fallback |
+| 🔄 | **Smart routing** | Switches providers silently on rate-limit — no manual action needed |
+| 🚀 | **Auto-start** | Optionally launch on Windows startup |
+
+---
+
+## Demo
+
+> Press **Ctrl+Q** → type → watch it happen.
+
+| What you type | What Vortex does |
+|---|---|
+| `open Spotify` | Finds and launches Spotify (Win32 or Store) |
+| `create a snake game in python and run it` | Installs pygame, writes full source, launches it |
+| `take a screenshot and send it to John on WhatsApp` | Screenshots, opens WhatsApp, navigates to contact, pastes and sends |
+| `what is the difference between TCP and UDP` | Returns a formatted answer — nothing executed on your machine |
+| `create a Flutter app called demo and open it in VS Code` | Runs `flutter create`, opens VS Code |
+| `search YouTube for lo-fi music` | Scrapes the first video ID, opens it directly in Chrome |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Windows 10 or 11 (x64)
+- [Flutter SDK](https://docs.flutter.dev/get-started/install/windows) with Windows desktop support enabled
+- A free API key from [Groq AI](https://console.groq.com/keys) and/or [Cohere](https://dashboard.cohere.com/api-keys)
+
+### Run from source
+
+```powershell
+git clone https://github.com/sherimello/vortex
+cd vortex_agent
+flutter pub get
+flutter run -d windows
+```
+
+### Build a release executable
+
+```powershell
+cd vortex_agent
+flutter build windows --release
+# Output: build\windows\x64\runner\Release\vortex_agent.exe
+```
+
+### Build the installer
+
+Install [Inno Setup 6](https://jrsoftware.org/isdl.php) first:
+
+```powershell
+winget install JRSoftware.InnoSetup
+```
+
+Then compile from the repo root:
+
+```powershell
+# Inno Setup installs to LocalAppData, not Program Files
+& "$env:LOCALAPPDATA\Programs\Inno Setup 6\ISCC.exe" vortex_setup.iss
+# Output: installer\VortexAgent_Setup.exe
+```
+
+---
+
+## AI Providers
+
+Vortex uses **[Groq AI](https://groq.com)** and **[Cohere](https://cohere.com)** as its AI backends. Both have free tiers — no credit card required.
+
+> **Note:** Groq AI (`groq.com`) is a fast inference platform and is **not** related to xAI's Grok chatbot.
+
+### Groq AI — Primary Provider
+
+Groq runs open-weight models (`llama-3.3-70b`, `mixtral-8x7b`, `llama-3.1-8b`) on custom LPU hardware, delivering responses in ~1–2 seconds. Vortex uses it as the primary provider for this reason.
+
+- **Free tier** — generous daily token limits, no credit card needed
+- **Auto model selection** — picks a lighter model for simple tasks, a larger one for complex ones
+- **Rate-limit handling** — on a 429, enters a 65-second cooldown (matches Groq's TPM window) then retries
+
+### Cohere — Fallback Provider
+
+[Cohere](https://cohere.com)'s `command-r` model kicks in automatically whenever Groq is rate-limited or its key is invalid. Its free tier has a higher per-minute quota, making it an ideal relief valve.
+
+- **Free tier** — higher TPM quota than Groq's free tier
+- **Silent failover** — Vortex switches to Cohere with no action needed from you
+- **Rate-limit handling** — on a 429, enters a 30-second cooldown then retries
+
+### Smart Routing
+
+`SmartRouterService` manages both providers at runtime. The logic:
+
+```
+Incoming request
+  │
+  ├── Groq key configured + not on cooldown?
+  │     ├── YES → send to Groq AI
+  │     │           ├── success → return result
+  │     │           └── rate-limit/error → 65s cooldown, fall through ↓
+  │     └── NO  → fall through ↓
+  │
+  └── Cohere key configured + not on cooldown?
+        ├── YES → send to Cohere
+        │           ├── success → return result
+        │           └── rate-limit/error → 30s cooldown, show error
+        └── NO  → show "no provider available" error
+```
+
+You can run Vortex with just one key. Add both for zero-interruption failover.
+
+---
+
+## Configuration
+
+On first launch, open **Settings** (gear icon in the input bar) and add your API keys.
+
+| Provider | Get a free key | Role |
+|---|---|---|
+| **Groq AI** | [console.groq.com/keys](https://console.groq.com/keys) | Primary — ultra-fast LPU inference |
+| **Cohere** | [dashboard.cohere.com/api-keys](https://dashboard.cohere.com/api-keys) | Fallback — higher free quota |
+
+The Settings screen has step-by-step instructions for obtaining each key and a **Test Connection** button to verify them before saving.
+
+---
+
+## How It Works
+
+```
+Ctrl+Q
+  │
+  ▼
+CommandInput (floating pill)
+  │
+  ▼
+AgentService.executeTask(task)
+  │
+  ├── SmartRouterService
+  │     ├── GroqService   (primary  — llama3 / mixtral)
+  │     └── CohereService (fallback — command-r)
+  │
+  ├── AI response classified as QUESTION or TASK
+  │
+  ├── QUESTION ──► chatAnswer event ──► rendered markdown in AgentResultView
+  │
+  └── TASK ──► STEP[N] blocks parsed
+                  │
+                  └── FileOperationService.executePowerShellScript()
+                            └── stdout / stderr streamed live to AgentResultView
+```
+
+**Step format** — the AI returns structured blocks that Vortex parses and runs sequentially:
+
+```
+STEP[1] wait=0
+Open the target app
+```powershell
+Start-Process "spotify"
+```
+
+STEP[2] wait=2500
+Click the search field and type the query
+```powershell
+# UI Automation script
+```
+```
+
+The `wait=N` ms value delays execution before a step to give the previous one time to launch.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| UI framework | Flutter — Windows desktop |
+| Window management | `window_manager` |
+| Global hotkey | `hotkey_manager` |
+| Navigation | GetX |
+| AI — primary | Groq AI API (`groq.com`) |
+| AI — fallback | Cohere API (`cohere.com`) |
+| HTTP client | `dio` |
+| Local storage | `shared_preferences` |
+| Installer | Inno Setup 6 |
+
+---
+
+## Project Structure
+
+```
+vortex_agent/
+├── lib/
+│   ├── main.dart                        # App entry, window lifecycle, hotkey
+│   ├── screens/
+│   │   ├── settings_screen.dart         # API keys, auto-start, connection test
+│   │   └── result_screen.dart           # Standalone result display
+│   ├── services/
+│   │   ├── agent_service.dart           # Task orchestration and step parsing
+│   │   ├── agent_prompts.dart           # System prompts (full + compact variants)
+│   │   ├── smart_router_service.dart    # Groq ↔ Cohere routing and failover
+│   │   ├── groq_service.dart            # Groq AI API client
+│   │   ├── cohere_service.dart          # Cohere API client
+│   │   ├── file_operation_service.dart  # PowerShell script execution
+│   │   ├── app_discovery_service.dart   # Installed app lookup (Win32 + UWP)
+│   │   ├── storage_service.dart         # Persisted settings
+│   │   └── service_locator.dart         # Dependency wiring (singleton)
+│   └── widgets/
+│       ├── prompt_input.dart            # Floating pill input bar
+│       ├── agent_result_view.dart       # Live step-by-step result UI
+│       └── screen_glow.dart             # Processing glow effect
+├── windows/
+│   └── runner/resources/
+│       └── app_icon.ico                 # App icon (multi-resolution)
+├── assets/
+│   └── images/
+│       └── logo.png
+├── vortex_setup.iss                     # Inno Setup installer script
+└── pubspec.yaml
+```
+
+---
+
+## Contributing
+
+Pull requests are welcome. For major changes please open an issue first to discuss what you'd like to change.
+
+1. Fork the repo
+2. Create a feature branch — `git checkout -b feature/my-feature`
+3. Commit your changes
+4. Push and open a pull request
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE) for details.
